@@ -30,9 +30,9 @@ public class ContentCollectionRepository {
 
     @PostConstruct
     private void init() {
-        Content c = new Content(1, "Test Date", "Just putting some test data", Status.IDEA, Type.ARTICLE, LocalDateTime.now(), null, )
+        Content c = new Content(1, "Test Date", "Just putting some test data", Status.IDEA, Type.ARTICLE, LocalDateTime.now(), null, "www.google.com");
 
-        )
+        content.add(c);
     }
 
 }
