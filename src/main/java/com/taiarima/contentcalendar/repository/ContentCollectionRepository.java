@@ -28,21 +28,25 @@ public class ContentCollectionRepository {
         return contentList.stream().filter(c -> c.id().equals(id)).findFirst();
     }
 
-
-
     public void save(Content content) {
+        contentList.removeIf(c -> c.id().equals(content.id()));
         contentList.add(content);
     }
 
 
-    @PostConstruct
-    private void init() {
-        Content c = new Content(1, "Test Date", "Just putting some test data", Status.IDEA, Type.ARTICLE, LocalDateTime.now(), null, "www.google.com");
-
-        contentList.add(c);
-    }
-
     public boolean existsById(Integer id) {
         return contentList.stream().filter(c -> c.id().equals(id)).count() == 1;
+    }
+
+    @PostConstruct
+    private void init() {
+        Content testContent = new Content(1, "Test Date", "Just putting some test data", Status.IDEA, Type.ARTICLE, null, null, "www.google.com");
+
+        contentList.add(testContent);
+    }
+
+
+    public void delete(Integer id) {
+        contentList.removeIf(c -> c.id().equals(id));
     }
 }
