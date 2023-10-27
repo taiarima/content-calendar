@@ -1,5 +1,6 @@
 package com.taiarima.contentcalendar;
 
+import com.taiarima.contentcalendar.constants.PathConstants;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taiarima.contentcalendar.model.Content;
@@ -58,7 +59,7 @@ public class ContentControllerTest {
         when(repository.findById(id)).thenReturn(Optional.of(testContent));
 
         // Act & Assert
-        mockMvc.perform(get("/api/content/{id}", id))
+        mockMvc.perform(get(PathConstants.CONTENT_BASE_PATH + PathConstants.CONTENT_BY_ID_PATH, id))
                 .andExpect(status().isOk());
     }
     @Test
@@ -67,7 +68,7 @@ public class ContentControllerTest {
         Integer id = 0;
 
         // When & Then
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/content/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.get(PathConstants.CONTENT_BASE_PATH + PathConstants.CONTENT_BY_ID_PATH, id)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -78,7 +79,7 @@ public class ContentControllerTest {
         List<Content> expectedContentList = List.of(testContent);
         when(repository.findAll()).thenReturn(expectedContentList);
 
-        mockMvc.perform(get("/api/content"))
+        mockMvc.perform(get(PathConstants.CONTENT_BASE_PATH))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(List.of(testContent))));
     }
@@ -89,7 +90,7 @@ public class ContentControllerTest {
 
 
         mockMvc.perform(
-                        post("/api/content")
+                        post(PathConstants.CONTENT_BASE_PATH)
                                 .contentType("application/json")
                                 .content(objectMapper.writeValueAsString(newContent))
                 )
@@ -104,7 +105,7 @@ public class ContentControllerTest {
         when(repository.existsById(id)).thenReturn(true);
 
         mockMvc.perform(
-                        put("/api/content/{id}", id)
+                        put(PathConstants.CONTENT_BASE_PATH + PathConstants.CONTENT_BY_ID_PATH, id)
                                 .contentType("application/json")
                                 .content(objectMapper.writeValueAsString(updatedContent))
                 )
@@ -116,7 +117,7 @@ public class ContentControllerTest {
         Content updatedContent = new Content(0, "Test Data", "Just updating some test data", Status.IDEA, Type.ARTICLE, LocalDateTime.now(), null, "www.google.com");
         Integer id = updatedContent.id();
         mockMvc.perform(
-                        put("/api/content/{id}", id)
+                        put(PathConstants.CONTENT_BASE_PATH + PathConstants.CONTENT_BY_ID_PATH, id)
                                 .contentType("application/json")
                                 .content(objectMapper.writeValueAsString(updatedContent))
                 )
@@ -125,17 +126,22 @@ public class ContentControllerTest {
 
     @Test
     void givenExistingId_whenDelete_thenStatusNoContent() throws Exception {
+
+        Integer id = testContent.id();
+
         when(repository.existsById(testContent.id())).thenReturn(true);
         mockMvc.perform(
-                delete("/api/content/{id}", testContent.id())
+                delete(PathConstants.CONTENT_BASE_PATH + PathConstants.CONTENT_BY_ID_PATH, id)
 
         ).andExpect(status().isNoContent());
     }
 
     @Test
     void givenNonExistentId_whenDelete_thenStatusNotFound() throws Exception {
+        Integer id = testContent.id();
+
         mockMvc.perform(
-                delete("/api/content/{id}", testContent.id())
+                delete(PathConstants.CONTENT_BASE_PATH + PathConstants.CONTENT_BY_ID_PATH, id)
 
         ).andExpect(status().isNotFound());
     }
