@@ -38,6 +38,10 @@ public class ContentCollectionRepository {
         return contentList.stream().filter(c -> c.id().equals(id)).count() == 1;
     }
 
+    public void delete(Integer id) {
+        contentList.removeIf(c -> c.id().equals(id));
+    }
+
     @PostConstruct
     private void init() {
         Content testContent = new Content(1, "Test Date", "Just putting some test data", Status.IDEA, Type.ARTICLE, null, null, "www.google.com");
@@ -46,7 +50,4 @@ public class ContentCollectionRepository {
     }
 
 
-    public void delete(Integer id) {
-        contentList.removeIf(c -> c.id().equals(id));
-    }
 }
