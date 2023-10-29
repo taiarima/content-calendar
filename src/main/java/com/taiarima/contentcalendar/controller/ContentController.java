@@ -49,7 +49,7 @@ public class ContentController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping(PathConstants.CONTENT_BY_ID_PATH)
+    @DeleteMapping(PathConstants.CONTENT_BY_ID_PATH)
     public void delete(@PathVariable Integer id) {
         if (!repository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found");

@@ -50,7 +50,7 @@ public class ContentControllerTest {
 
     @BeforeEach
     public void setup() {
-        testContent = new Content(1, "Test Date", "Just putting some test data", Status.IDEA, Type.ARTICLE, null, null, "www.google.com");
+        testContent = new Content(1, "Test Date", "Just putting some test data", Status.IDEA, Type.ARTICLE, null, null, "http://www.google.com");
     }
     @Test
     public void givenExistentId_whenFindById_thenStatusOk() throws Exception {
@@ -86,7 +86,7 @@ public class ContentControllerTest {
 
     @Test
     void whenCreate_thenStatusCreated() throws Exception {
-        Content newContent = new Content(2, "New Date", "Creating new content", Status.IDEA, Type.ARTICLE, LocalDateTime.now(), null, "www.example.com");
+        Content newContent = new Content(2, "New Date", "Creating new content", Status.IDEA, Type.ARTICLE, LocalDateTime.now(), LocalDateTime.now(), "http://www.example.com");
 
 
         mockMvc.perform(
@@ -100,7 +100,7 @@ public class ContentControllerTest {
 
     @Test
     void givenExistentId_whenUpdate_thenStatusNoContent() throws Exception {
-        Content updatedContent = new Content(1, "Test Data", "Just updating some test data", Status.IDEA, Type.ARTICLE, LocalDateTime.now(), null, "www.google.com");
+        Content updatedContent = new Content(1, "Test Data", "Just updating some test data", Status.IDEA, Type.ARTICLE, LocalDateTime.now(), null, "http://www.google.com");
         Integer id = updatedContent.id();
         when(repository.existsById(id)).thenReturn(true);
 

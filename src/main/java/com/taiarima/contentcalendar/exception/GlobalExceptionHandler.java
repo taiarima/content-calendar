@@ -25,8 +25,8 @@ public class GlobalExceptionHandler {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        System.out.println("Error found in method argument");
+        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ResponseStatusException.class)

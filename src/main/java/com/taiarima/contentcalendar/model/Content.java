@@ -17,7 +17,7 @@ public record Content(
         @NotNull Type contentType,
         LocalDateTime dateCreated,
         LocalDateTime dateUpdated,
-        @URL @NotBlank String url
+        @URL String url
 ) {
 
 }
