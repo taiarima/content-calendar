@@ -1,17 +1,10 @@
 package com.taiarima.contentcalendar.repository;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.taiarima.contentcalendar.model.Content;
+import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ContentRepository {
-
-    private final JdbcTemplate jdbcTemplate;
-
-    public ContentRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-
-    }
-
+public interface ContentRepository extends ListCrudRepository<Content, Integer> {
 
 }

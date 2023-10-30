@@ -2,6 +2,7 @@ package com.taiarima.contentcalendar.controller;
 
 import com.taiarima.contentcalendar.model.Content;
 import com.taiarima.contentcalendar.repository.ContentCollectionRepository;
+import com.taiarima.contentcalendar.repository.ContentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,10 +16,10 @@ import java.util.List;
 @CrossOrigin
 public class ContentController {
 
-    private final ContentCollectionRepository repository;
+    private final ContentRepository repository;
 
-    public ContentController(ContentCollectionRepository contentCollectionRepository) {
-        this.repository = contentCollectionRepository;
+    public ContentController(ContentRepository contentRepository) {
+        this.repository = contentRepository;
     }
 
     // Make a request and find all pieces of content in the system
@@ -54,7 +55,7 @@ public class ContentController {
         if (!repository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found");
         }
-        repository.delete(id);
+        repository.deleteById(id);
     }
 
 
