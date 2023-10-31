@@ -9,6 +9,6 @@ CREATE TABLE IF NOT EXISTS Content (
     url VARCHAR(255)
 );
 
-INSERT INTO Content(title, descr, status, content_type, date_created)
-VALUES ('Blog post', 'A blog post I wrote', 'IDEA', 'ARTICLE', CURRENT_TIMESTAMP);
+--INSERT INTO Content(title, descr, status, content_type, date_created)
+--VALUES ('Blog post', 'A blog post I wrote', 'IDEA', 'ARTICLE', CURRENT_TIMESTAMP);
 

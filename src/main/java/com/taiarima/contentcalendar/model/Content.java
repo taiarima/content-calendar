@@ -9,12 +9,14 @@ import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
+// This is an entity
+
 
 public record Content(
 
-        @Id @NotNull @Min(1) Integer id,
+        @Id Integer id,
         @NotBlank @Size(min = 3, max = 100) String title,
-        @NotBlank @Size(min = 3, max = 500) String desc,
+        @NotBlank @Size(min = 3, max = 500) String descr,
         @NotNull Status status,
         @NotNull Type contentType,
         LocalDateTime dateCreated,

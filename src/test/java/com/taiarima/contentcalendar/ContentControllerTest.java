@@ -4,7 +4,7 @@ import com.taiarima.contentcalendar.constants.PathConstants;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taiarima.contentcalendar.model.Content;
-import com.taiarima.contentcalendar.repository.ContentCollectionRepository;
+import com.taiarima.contentcalendar.repository.ContentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -41,7 +40,7 @@ public class ContentControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ContentCollectionRepository repository;
+    private ContentRepository repository;
 
     @Autowired
     private ObjectMapper objectMapper;

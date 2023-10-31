@@ -1,7 +1,7 @@
 package com.taiarima.contentcalendar.controller;
 
 import com.taiarima.contentcalendar.model.Content;
-import com.taiarima.contentcalendar.repository.ContentCollectionRepository;
+import com.taiarima.contentcalendar.model.Status;
 import com.taiarima.contentcalendar.repository.ContentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +18,8 @@ public class ContentController {
 
     private final ContentRepository repository;
 
-    public ContentController(ContentRepository contentRepository) {
-        this.repository = contentRepository;
+    public ContentController(ContentRepository repository) {
+        this.repository = repository;
     }
 
     // Make a request and find all pieces of content in the system
@@ -57,6 +57,18 @@ public class ContentController {
         }
         repository.deleteById(id);
     }
+
+    @GetMapping("/filter/{keyword}")
+    public List<Content> findByTitle(@PathVariable String keyword) {
+        return repository.findAllByTitleContainsIgnoreCase(keyword);
+    }
+
+    @GetMapping("/filter/status/{status}")
+    public List<Content> findByStatus(@PathVariable Status status) {
+        return repository.listByStatus(status);
+    }
+
+
 
 
 }
