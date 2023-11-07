@@ -16,7 +16,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +34,8 @@ public class ContentRepositoryTest {
 
     private Integer contentId1;
     private Integer contentId2;
+
+    private Integer initialDataSetupCount;
 
 
     @BeforeEach
@@ -75,10 +76,13 @@ public class ContentRepositoryTest {
             return ps;
         }, keyHolder2);
         contentId2 = keyHolder2.getKey().intValue();
-//        jdbcTemplate.update(
-//                "INSERT INTO content (title, descr, status, content_type, date_created, url) VALUES (?, ?, ?, ?, ?, ?)",
-//                "Title One", "Description One", Status.COMPLETED.name(), Type.ARTICLE.name(), LocalDateTime.now(), "http://example.com/1"
-//        );
+        initialDataSetupCount = 2;
+    }
+
+    @Test
+    public void whenCount_thenReturnCorrectNumberOfEntries() {
+        long count = contentRepository.count();
+        assertThat(count).isEqualTo(initialDataSetupCount);
     }
 
     @Test
@@ -87,7 +91,7 @@ public class ContentRepositoryTest {
         List<Content> found = contentRepository.findAllByTitleContainsIgnoreCase("title");
 
         // then
-        assertThat(found).hasSize(2).extracting(Content::title).containsExactlyInAnyOrder("Title One", "Title Two");
+        assertThat(found).hasSize(initialDataSetupCount).extracting(Content::title).containsExactlyInAnyOrder("Title One", "Title Two");
     }
 
     @Test
@@ -111,7 +115,7 @@ public class ContentRepositoryTest {
     @Test
     public void givenData_whenFindAll_thenReturnData() {
         List<Content> found = contentRepository.findAll();
-        assertThat(found).hasSize(2);
+        assertThat(found).hasSize(initialDataSetupCount);
     }
 
     @Test
@@ -143,7 +147,7 @@ public class ContentRepositoryTest {
 
     @Test
     public void givenNonExistentId_whenExistsById_thenReturnFalse() {
-        boolean exists = contentRepository.existsById(99);
+        boolean exists = contentRepository.existsById(Integer.MAX_VALUE);
         assertThat(exists).isFalse();
     }
 
